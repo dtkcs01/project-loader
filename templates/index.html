@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang='en' dir='ltr'>
+  <head>
+    <meta charset='utf-8'>
+    <meta name="viewport" content='width=device-width, initial-scale=1.0'>
+    <title>Source | {{ location }}</title>
+
+    <link rel="stylesheet" href="/static/css/master.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+          <div class="row">
+            {% for content in dir_contents %}
+              <div class="col-12 box">
+                <div class="row">
+                  <div class="col-9">
+                    {{ content[0] }}
+                  </div>
+                  <div class="col-3">
+                    <div class="row">
+                      <div class="col-2"></div>
+                      <div class="col-5">
+                        <a href="/handle/name_{{ content[0] }}" target="{{ content[1] }}">
+                          <button type="button" class="btn btn-sm btn-primary pl-4 pr-4">Open</button>
+                        </a>
+                      </div>
+                      <div class="col-5">
+                        <a href="/handle/name_{{ content[0] }}">
+                          <button type="button" class="btn btn-sm btn-outline-danger pl-4 pr-4">Load</button>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
