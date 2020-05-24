@@ -1,84 +1,53 @@
 <!DOCTYPE html>
-<html lang='en' dir='ltr'>
+<html lang="en" dir="ltr">
   <head>
     <meta charset='utf-8'>
     <meta name="viewport" content='width=device-width, initial-scale=1.0'>
-    <title>Source | {{ location }}</title>
+    <title>Source</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/master.css">
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
   </head>
-  <body>
+  <body onload="webSocketHandler({{ web_config }}).init();">
     <div class="container-fluid">
       <div class="row">
-        <div class="col-1"></div>
-        <div class="col-10 app">
-          <div class="head">
-            <div class="row">
-              <div class="col-9">
-                <div class="custom-control custom-checkbox">
-                  <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
-                  <label class="custom-control-label pl-2" for="customCheck">
-                    <i class="fa fa-angle-down text-bold pr-2"></i>
-                      {% for (nav, link) in navigation %}
-                        <a href='/?location={{ link }}' class="small">
-                          {% if nav|length == 0 %}
-                            <i class="fa fa-folder"></i>
-                          {% else %}
-                            {{ nav }}
-                          {% endif %}
-                        </a>
-                        /
-                      {% endfor %}
-                  </label>
-                </div>
-              </div>
-              <div class="col-3">
-                <div class="float-right">
-                  <div class="toggle-content small">Explore</div>
-                  <div class="toggle-content">
-                    <div class="toggle-space">
-                      <div class="toggle-explore bg-primary"></div>
-                    </div>
-                  </div>
-                  <div class="toggle-content small">Analyse</div>
-                </div>
+
+        <div class="col-10 app mx-auto">
+          <div class="row">
+            <div class="col-12">
+              <div class="custom-control custom-checkbox">
+                <input type="checkbox" class="custom-control-input" id="customCheck" name="main">
+                <label class="custom-control-label pl-2" for="customCheck"></label>
+                {% for (nav, link) in navbar %}
+                  <a href='/?location={{ link }}' class="small">
+                    {% if nav|length == 0 %}
+                      <i class="fa fa-folder"></i>
+                    {% else %}
+                      {{ nav }}
+                    {% endif %}
+                  </a>
+                  /
+                {% endfor %}
               </div>
             </div>
           </div>
-          <div class="hr-b bg-secondary"></div>
-          {% for content in dir_contents %}
-            <div class="tab">
-              <div class="row">
-                <div class="col-9">
-                  <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck" name="example1">
-                    <label class="custom-control-label pl-2" for="customCheck">
-                      <i class="fa fa-{{ content['icon'] }}-o text-bold pr-2"></i>
-                      <a href="/handle/name_{{ content['name'] }}?location={{ location }}" target="{{ content['target'] }}">{{ content['name'] }}</a>
-                    </label>
-                  </div>
-                </div>
-                <div class="col-3">
-                  <button type="button" class="btn s btn-danger float-right btn-sm"><i class="fa fa-trash"></i></button>
-                  <button type="button" class="btn s btn-light float-right btn-sm mr-3">Re-name</button>
-                  {% if content['is_file'] %}
-                    <button type="button" class="btn float-right btn-sm mr-3">{{ content['size'] }}</button>
-                  {% endif %}
-                </div>
-              </div>
+          <div class="row">
+            <div class="hr"></div>
+          </div>
+          <div class="row">
+            <div class="col-12">
+
             </div>
-            <div class="hr bg-secondary"></div>
-          {% endfor %}
+          </div>
         </div>
-        <div class="col-1"></div>
       </div>
     </div>
+    <p id="is_alive"></p>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script src="/static/js/socket.js"></script>
   </body>
 </html>
