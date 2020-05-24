@@ -1,5 +1,7 @@
 @echo off
-echo Setting environment...
-set PORT=8080
-set SESSION=L3tsS331fN33d3d
-echo Settings registered...
+set APPLICATION.HOST_IP=127.0.0.1
+set FLASK_APP.HOST_PORT=8080
+set FLASK_APP.SECRET_KEY=s0m3Exp3riment
+set WEB_SOCKET.PORT=8000
+set WEB_SOCKET.PING_INTERVAL=2000
+set USER_ID_LENGTH=64
