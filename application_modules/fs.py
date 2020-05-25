@@ -55,6 +55,6 @@ class File_System(object):
         return '{} {}'.format(size, self._size_units[i])
 
     def add_clean_session_id(self, id, session_id):
-        with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'cleaner.txt'), 'a') as file:
+        with open('clean.txt', 'a') as file:
             file.write('\n{} {}'.format(id, session_id))
             file.close()

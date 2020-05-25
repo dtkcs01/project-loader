@@ -21,7 +21,7 @@
                 <input type="checkbox" class="custom-control-input" id="customCheck" name="main">
                 <label class="custom-control-label pl-2" for="customCheck"></label>
                 {% for (nav, link) in navbar %}
-                  <a href='/?location={{ link }}' class="small">
+                  <a href='/?redirect={{ link }}' class="small">
                     {% if nav|length == 0 %}
                       <i class="fa fa-folder"></i>
                     {% else %}
