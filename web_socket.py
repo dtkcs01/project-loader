@@ -7,8 +7,8 @@ import tornado.ioloop
 import tornado.escape
 import tornado.options
 import tornado.websocket
-from tracker import Logger_Class
-__file_location__ = os.path.realpath(__file__)
+from helper import Logger
+TAG = os.path.realpath(__file__)
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     """docstring for WebSocketHandler."""
@@ -24,11 +24,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         self._location = os.path.join(os.path.abspath(os.sep), *dirs)
         self._data = { 'folders': set(), 'files': set() }
         WebSocketHandler.active_clients.add(self)
-        print('[ WebSocketHandler.open ]:: Client connected for path "{}"...'.format(self._location))
+        Logger.warn(TAG, 'Client connected for path [ "{}" ]...'.format(self._location))
 
     def on_close(self):
         WebSocketHandler.active_clients.remove(self)
-        print('[ WebSocketHandler.on_close ]:: Client disconnected from path "{}"...'.format(self._location))
+        Logger.warn(TAG, 'Client for path [ "{}" ] disconnected...'.format(self._location))
 
     def on_message(self, message):
         parsed = tornado.escape.json_decode(message)

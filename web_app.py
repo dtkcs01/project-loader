@@ -6,13 +6,13 @@ import tornado.escape
 import tornado.options
 import tornado.websocket
 from web_socket import WebSocketHandler
-from tracker import Logger_Class
+from helper import Logger
 
-__file_location__ = os.path.realpath(__file__)
+TAG = os.path.realpath(__file__)
 
 class Application(tornado.web.Application):
     def __init__(self):
-        print('[ web_app.py ( Application.__init__ ) ]:: Initialising Tornado Application...')
+        Logger.debug(TAG, 'Initialising Tornado Application...')
         handlers = [(r"/d/?.*", MainHandler), (r"/websocket/?.*", WebSocketHandler)]
         settings = dict(
             cookie_secret = "__TODO:_GENERATE_YOUR_OWN_RANDOM_VALUE_HERE__",
