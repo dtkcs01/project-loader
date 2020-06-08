@@ -30,37 +30,42 @@ class Logger(object):
 
     @classmethod
     def info(self, TAG, message):
-        print('{} {}'.format(
-            self.color('[ {} ]::'.format(TAG), 0),
-            self.color(message, 1)
-        ))
+        if(self.__is_logging__):
+            print('{} {}'.format(
+                self.color('[ {} ]::'.format(TAG), 0),
+                self.color(message, 1)
+            ))
 
     @classmethod
     def debug(self, TAG, message):
-        print('{} {}'.format(
-            self.color('[ {} ]::'.format(TAG), 0),
-            self.color(message, 2)
-        ))
+        if(self.__is_logging__):
+            print('{} {}'.format(
+                self.color('[ {} ]::'.format(TAG), 0),
+                self.color(message, 2)
+            ))
 
     @classmethod
     def warn(self, TAG, message):
-        print('{} {}'.format(
-            self.color('[ {} ]::'.format(TAG), 0),
-            self.color(message, 3)
-        ))
+        if(self.__is_logging__):
+            print('{} {}'.format(
+                self.color('[ {} ]::'.format(TAG), 0),
+                self.color(message, 3)
+            ))
 
     @classmethod
     def error(self, TAG, message, err = None):
-        print('{} {}\n {}'.format(
-            self.color('[ {} ]::'.format(TAG), 0),
-            self.color(message, 4),
-            self.color(err, 4)
-        ))
+        if(self.__is_logging__):
+            print('{} {}\n {}'.format(
+                self.color('[ {} ]::'.format(TAG), 0),
+                self.color(message, 4),
+                self.color(err, 4)
+            ))
 
     @classmethod
     def critical(self, TAG, message, err = None):
-        print('{} {}\n {}'.format(
-            self.color('[ {} ]::'.format(TAG), 0),
-            self.color(message, 5),
-            self.color(err, 5)
-        ))
+        if(self.__is_logging__):
+            print('{} {}\n {}'.format(
+                self.color('[ {} ]::'.format(TAG), 0),
+                self.color(message, 5),
+                self.color(err, 5)
+            ))

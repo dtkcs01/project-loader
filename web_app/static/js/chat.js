@@ -10,7 +10,9 @@ function WebSocketHandler() {
     let url = `ws://${ window.location.host }/websocket/${ path }`;
     socket = new WebSocket(url);
     socket.onmessage = function(event) {
-      refresh(JSON.parse(event.data));
+      document.getElementById('inbox').innerHTML = event.data;
+      console.log(JSON.parse(event.data));
+      // refresh(JSON.parse(event.data));
     }
     socket.onopen = function(event) {
       socket.send(JSON.stringify({'id':'some'}));

@@ -1,11 +1,11 @@
 import os
-import json
-import uuid
-import urllib
+import sys
 import tornado.escape
 import tornado.websocket
 from helper import Logger
 TAG = os.path.realpath(__file__)
+sys.path.append(os.path.dirname(os.path.realpath(__file__)))
+from live_loader import Live_Loader
 
 class WebSocketHandler(tornado.websocket.WebSocketHandler):
     """docstring for WebSocketHandler."""
@@ -16,35 +16,16 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         return {}
 
     def open(self):
-        url = urllib.parse.urlparse(self.request.full_url())
-        dirs = list(filter(lambda x: len(x) > 0, url.path.split('/')))[1:]
-        self._location = os.path.join(os.path.abspath(os.sep), *dirs)
-        self._data = { 'folders': set(), 'files': set() }
+        self._loader = Live_Loader(self.request.full_url())
         WebSocketHandler.active_clients.add(self)
-        Logger.warn(TAG, 'Started watching [ "{}" ] for changes...'.format(self._location))
+        Logger.warn(TAG, 'Started watching [ "{}" ] for changes...'.format(self._loader.location))
 
     def on_close(self):
         WebSocketHandler.active_clients.remove(self)
-        Logger.warn(TAG, 'Stopped watching [ "{}" ] for changes...'.format(self._location))
+        Logger.warn(TAG, 'Stopped watching [ "{}" ] for changes...'.format(self._loader.location))
 
     def on_message(self, message):
         parsed = tornado.escape.json_decode(message)
-        diff = self.load_diff()
-        if(diff):
-            self.write_message(json.dumps(diff))
-
-    def load_diff(self):
-        dirs = set(os.listdir(self._location))
-        tmp = {}
-        tmp['files'] = set(filter(lambda x: os.path.isfile(os.path.join(self._location, x)), dirs))
-        tmp['folders'] = dirs - tmp['files']
-        diff = { 'files': [] , 'folders': []}
-        for key in self._data.keys():
-            v0 = self._data[key]
-            v1 = tmp[key]
-            added = v1 - v0
-            removed = v0 - v1
-            diff[key] += [ (name, True) for name in added ] + [ (name, False) for name in removed ]
-            self._data[key].update(added)
-            self._data[key] = self._data[key] - removed
-        return diff
+        packet = self._loader.load()
+        if(packet):
+            self.write_message(packet)
