@@ -3,21 +3,15 @@ from colorama import Fore, Back, Style
 class Logger(object):
     """docstring for Logger."""
     __is_logging__ = False
-    __origin_color__ = Back.LIGHTBLUE_EX
-    __info_color__ = Fore.WHITE
-    __debug_color__ = Fore.GREEN
-    __warn_color__ = Fore.YELLOW
-    __error_color__ = Fore.LIGHTRED_EX
-    __critical_color__ = Fore.RED
-    __reset__ = Style.RESET_ALL
     types = {
-        0: __origin_color__,
-        1: __info_color__,
-        2: __debug_color__,
-        3: __warn_color__,
-        4: __error_color__,
-        5: __critical_color__
+        0: Back.LIGHTBLUE_EX, # Origin (i.e. TAG) Color
+        1: Fore.WHITE, # Info (i.e. Logger.info) Color
+        2: Fore.GREEN, # Debug (i.e. Logger.debug) Color
+        3: Fore.YELLOW, # Warn (i.e. Logger.warn) Color
+        4: Fore.LIGHTRED_EX, # Error (i.e. Logger.error) Color
+        5: Fore.RED # Critical Error (i.e. Logger.critical) Color
     }
+    __reset__ = Style.RESET_ALL
 
     def __init__(self):
         super(Logger, self).__init__()

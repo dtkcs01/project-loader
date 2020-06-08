@@ -1,16 +1,20 @@
 import os
-import tornado.web
+import colorama
+import traceback
 import tornado.ioloop
-import tornado.escape
-import tornado.options
-import tornado.websocket
-
-from colorama import init
-init()
 from helper import Logger
-Logger.switch_logging()
-
 from web_app import Application
-app = Application()
-app.listen(8888)
-tornado.ioloop.IOLoop.current().start()
+TAG = os.path.realpath(__file__)
+
+def main():
+    colorama.init()
+    Logger.switch_logging(True)
+    app = Application().listen(int(os.environ.get('PORT')))
+    tornado.ioloop.IOLoop.current().start()
+
+try:
+    main()
+except KeyboardInterrupt as k:
+    Logger.warn(TAG, 'Closing application...')
+except Exception as e:
+    Logger.critical(TAG, 'Error while running application', traceback.format_exc())

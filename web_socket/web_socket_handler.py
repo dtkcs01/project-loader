@@ -2,10 +2,7 @@ import os
 import json
 import uuid
 import urllib
-import tornado.web
-import tornado.ioloop
 import tornado.escape
-import tornado.options
 import tornado.websocket
 from helper import Logger
 TAG = os.path.realpath(__file__)
@@ -24,11 +21,11 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         self._location = os.path.join(os.path.abspath(os.sep), *dirs)
         self._data = { 'folders': set(), 'files': set() }
         WebSocketHandler.active_clients.add(self)
-        Logger.warn(TAG, 'Client connected for path [ "{}" ]...'.format(self._location))
+        Logger.warn(TAG, 'Started watching [ "{}" ] for changes...'.format(self._location))
 
     def on_close(self):
         WebSocketHandler.active_clients.remove(self)
-        Logger.warn(TAG, 'Client for path [ "{}" ] disconnected...'.format(self._location))
+        Logger.warn(TAG, 'Stopped watching [ "{}" ] for changes...'.format(self._location))
 
     def on_message(self, message):
         parsed = tornado.escape.json_decode(message)
