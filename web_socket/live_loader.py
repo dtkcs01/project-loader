@@ -1,3 +1,4 @@
+import re
 import os
 import json
 import urllib
@@ -31,9 +32,10 @@ class Live_Loader(object):
 
     def build_url(self, name):
         if(name == '..'):
-            return '/d/{}'.format('/'.join(self._dirs[: -1]))
+            path = '/d/{}'.format('/'.join(self._dirs[: -1]))
         else:
-            return '/d/{}/{}'.format('/'.join(self._dirs), name)
+            path = '/d/{}/{}'.format('/'.join(self._dirs), name)
+        return re.sub(r'/+', r'/', path)
 
     def normalize_size(self, bytes):
         i = 0

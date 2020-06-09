@@ -10,15 +10,15 @@ function WebSocketHandler() {
     let url = `ws://${ window.location.host }/websocket/${ path }`;
     socket = new WebSocket(url);
     socket.onmessage = function(event) {
+      let data = JSON.parse(event.data);
       document.getElementById('inbox').innerHTML = event.data;
-      console.log(JSON.parse(event.data));
-      // refresh(JSON.parse(event.data));
+      refresh(JSON.parse(event.data));
     }
     socket.onopen = function(event) {
-      socket.send(JSON.stringify({'id':'some'}));
+      socket.send("Alive...");
       var ping = setInterval(function () {
         if(socket.readyState === WebSocket.OPEN) {
-          socket.send(JSON.stringify({'id' : 'some'}));
+          socket.send("Alive...");
         } else {
           alert('Lost Connection to server...');
           clearInterval(ping);
@@ -30,24 +30,35 @@ function WebSocketHandler() {
   var refresh = function(load) {
     let inbox = $('#inbox');
     for(var key in load) {
-      let added = load[key]
-                    .filter(obj => obj[1])
-                    .map(obj => obj[0]);
-      let removed = new Set(load[key]
-                    .filter(obj => !obj[1])
-                    .map(obj => obj[0]));
+      let [added, changed, removed] = reconstructPacket(load[key]);
       data[key] = data[key].concat(added);
-      data[key] = data[key].filter(name => !removed.has(name));
-      data[key].sort((a, b) => { return a.toLowerCase().localeCompare(b.toLowerCase()) });
+      data[key] = data[key].filter(obj => !removed.has(obj.name));
+      data[key].map(obj => { changed[obj.name]? (obj.size = changed[obj.name]): null; });
+      data[key].sort((a, b) => a.name.toLowerCase().localeCompare(b.name.toLowerCase()));
     }
     inbox.empty();
-    for(let i = 0; i < data.folders.length; i++){
-      inbox.append(`<li>${ data.folders[i] }</li>`);
-    }
-    for(let i = 0; i < data.files.length; i++){
-      inbox.append(`<li><b>${ data.files[i] }</b></li>`);
+    for(var key in load) {
+      for(let i = 0; i < data[key].length; i++){
+        inbox.append(`<li><a href="${ data[key][i].url }">${ data[key][i].name }</a>: ${ data[key][i].size }</li>`);
+      }
     }
   };
+
+  var reconstructPacket = function (data) {
+    let added = [];
+    let removed = new Set();
+    let changed = {};
+    let switchCase = {
+      "1": (v) => { added.push(v); },
+      "0": (v) => { changed[v.name] = v.size; },
+      "-1": (v) => { removed.add(v.name); }
+    }
+    for(let tuple of data) {
+      tuple[2]['name'] = tuple[0];
+      switchCase[`${ tuple[1] }`](tuple[2]);
+    }
+    return [added, changed, removed];
+  }
 
   return {
     connect: connect

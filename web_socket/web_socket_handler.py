@@ -25,7 +25,6 @@ class WebSocketHandler(tornado.websocket.WebSocketHandler):
         Logger.warn(TAG, 'Stopped watching [ "{}" ] for changes...'.format(self._loader.location))
 
     def on_message(self, message):
-        parsed = tornado.escape.json_decode(message)
         packet = self._loader.load()
         if(packet):
             self.write_message(packet)
