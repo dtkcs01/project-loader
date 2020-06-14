@@ -1,0 +1,124 @@
+header {
+  height: 100px;
+  padding: 20px;
+  padding-left: 40px;
+  padding-right: 40px;
+  font-family: 'Playfair Display', serif;
+}
+
+.logo {
+  height: 100%;
+  width: auto;
+  display: inline-block;
+}
+
+header span {
+  color: #620195;
+}
+
+header h4 {
+  display: inline-block;
+}
+
+.app-button {
+  width: 175px;
+  border-radius: 5px;
+  font-family: 'Roboto', sans-serif;
+  border: 2px solid #620195;
+  background-color: #620195;
+  color: #FFFFFF;
+  padding: 3px;
+  margin: 10px;
+  transition: color, background 0.6s;
+}
+
+.app-button:hover {
+  background-color: rgba(167, 0, 255, 0.5);
+  color: #FFFFFF;
+}
+
+.app-button-secondary {
+  background-color: transparent;
+  color: #620195;
+}
+
+.hr-dark {
+  height: 1px;
+  border: 0;
+  background-color: #2C2C2C;
+  margin-top: 0;
+  width: 100%;
+}
+
+.tab-sep {
+  height: 1px;
+  border: 0;
+  background-color: #2C2C2C;
+  margin: 0;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  width: 100%;
+}
+
+.app {
+  max-width: 86%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 15px;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.select-style {
+  border: 0;
+  outline: 0;
+  padding-right: 30px;
+  border-bottom: 1px solid #2C2C2C;
+}
+
+#location {
+  margin-left: 10px;
+  display: inline-block;
+}
+
+.custom-control {
+  display: inline-block;
+}
+
+.text-muted {
+  display: inline-block;
+}
+
+.btn {
+  margin-left: 5px;
+  margin-right: 5px;
+}
+
+.btn-rename {
+  border: 1px solid #4C4C4C;
+  transition: background 0.4s;
+}
+
+.btn-rename:hover {
+  background-color: #DCDCDC;
+}
+
+.switch-mode {
+  cursor: pointer;
+  position: relative;
+  top: 5px;
+  border: 2px solid rgba(45, 45, 45, 0.6);
+  border-radius: 100px;
+  width: 50px;
+  height: 26px;
+  display: inline-block;
+}
+
+.ball {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  height: 18px;
+  width: 18px;
+  display: inline-block;
+  border-radius: 20px;
+}

@@ -7,10 +7,43 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="/static/css/master.css">
   </head>
   <body>
+    <header>
+      <img src="/static/img/logo.png" alt="LOGO" class="logo">
+      <h4>Pro<span>Code</span> Loader</h4>
+      <div class="float-right">
+        <a href="#"> <button type="button" name="button" class="app-button app-button-secondary"> Close </button> </a>
+        <a href="#"> <button type="button" name="button" class="app-button"> Contact Dev </button> </a>
+      </div>
+    </header>
+    <hr class="hr-dark">
+    <div class="container app">
+      <div class="row">
+        <div class="col-12">
+          <select class="select-style text-small" name="">
+            <option value="all">All</option>
+            <option value="folders">Folders</option>
+            <option value="files">Files</option>
+          </select>
+          <div id="location">
+            <a href="/d"><i class="fa fa-folder"></i></a> /
+          </div>
+          <div class="float-right" id="toggle-mode">
+
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <hr class="hr-dark mt-2 mb-2">
+      </div>
+      <div id="contents">
+
+      </div>
+    </div>
     <div id="body">
       <ul id="inbox">
         <!-- The list -->

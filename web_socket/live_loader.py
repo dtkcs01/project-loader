@@ -31,10 +31,7 @@ class Live_Loader(object):
         self._location = os.path.join(os.path.abspath(os.sep), *self._dirs)
 
     def build_url(self, name):
-        if(name == '..'):
-            path = '/d/{}'.format('/'.join(self._dirs[: -1]))
-        else:
-            path = '/d/{}/{}'.format('/'.join(self._dirs), name)
+        path = '/d/{}/{}'.format('/'.join(self._dirs), name)
         return re.sub(r'/+', r'/', path)
 
     def normalize_size(self, bytes):
@@ -73,7 +70,6 @@ class Live_Loader(object):
 
     def load(self):
         dirs = os.listdir(self._location)
-        dirs.append('..')
         dirs.sort()
         current = self.load_dirs(dirs)
         packet = { 'folders': [], 'files': [] }
