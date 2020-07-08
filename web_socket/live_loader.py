@@ -26,7 +26,7 @@ class Live_Loader(object):
         ]
 
     def decode_url(self, url):
-        url = urllib.parse.urlparse(url)
+        url = urllib.parse.urlparse(urllib.parse.unquote(url))
         self._dirs = list(filter(lambda x: len(x) > 0, url.path.split('/')))[1: ]
         self._location = os.path.join(os.path.abspath(os.sep), *self._dirs)
 
