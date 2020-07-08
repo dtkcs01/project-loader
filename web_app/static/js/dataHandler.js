@@ -1,4 +1,20 @@
+/*
+  Modules required:
+    1. HTMLBuilder [ htmlBuilder.js ]
+  Contents:
+    1. function [ DataHandler ]
+*/
 function DataHandler(pathBuilder) {
+  /*
+    Structure:
+      1. Declarations [ 3 ]
+      2. Functions [ 2 private 1 public ]
+        i. function [ reconstructPacket ] ( private )
+        ii. function [ renderData ] ( private )
+        iii. function [ refresh ] ( public )
+      3. Return
+  */
+
   var parent = {
     name: '..',
     type: 'folder',
@@ -8,9 +24,7 @@ function DataHandler(pathBuilder) {
     folders: [],
     files: []
   };
-
   var htmlBuilder = HTMLBuilder(pathBuilder);
-  htmlBuilder.constructLocationForWindow(pathBuilder.getPath().split('/'));
 
   var reconstructPacket = function(data) {
     let added = [];
@@ -50,6 +64,8 @@ function DataHandler(pathBuilder) {
     }
     renderData();
   };
+
+  htmlBuilder.constructLocationForWindow(pathBuilder.getPath().split('/'));
 
   return {
     refresh: refresh

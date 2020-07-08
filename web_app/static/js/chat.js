@@ -1,6 +1,25 @@
+/*
+  Modules required:
+    1. PathBuilder [ pathBuilder.js ]
+    2. DataHandler [ dataHandler.js ]
+  Contents:
+    1. function [ WebSocketHandler ]
+    2. Entry point [ $(document).ready ]
+*/
+
 function WebSocketHandler() {
+  /*
+    Structure:
+      1. Declarations [ 3 ]
+      2. Functions [ 2 private 1 public ]
+        i. function [ onMessageReceive ] ( private )
+        ii. function [ onSocketConnection ] ( private )
+        iii. function [ connect ] ( public )
+      3. Return
+  */
+
   var socket = null;
-  var pathBuilder = PathBuilder();
+  var pathBuilder = PathBuilder(); // Shared between all modules
   var dataHandler = DataHandler(pathBuilder);
 
   var onMessageReceive = function(event) {
