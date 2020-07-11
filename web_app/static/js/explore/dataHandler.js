@@ -7,7 +7,7 @@
 function DataHandler(pathBuilder) {
   /*
     Structure:
-      1. Declarations [ 3 ]
+      1. Declarations [ 4 ]
       2. Functions [ 2 private 1 public ]
         i. function [ reconstructPacket ] ( private )
         ii. function [ renderData ] ( private )
@@ -24,6 +24,11 @@ function DataHandler(pathBuilder) {
   var data = {
     folders: [],
     files: []
+  };
+  var filterData = {
+    'all': () => ['All', [...data.folders, ...data.files]],
+    'folders': () => ['Folders', [...data.folders]],
+    'files': () => ['Files', [...data.files]]
   };
   var htmlBuilder = HTMLBuilder(pathBuilder);
 
@@ -48,10 +53,9 @@ function DataHandler(pathBuilder) {
     contents.empty();
 
     contents.append(htmlBuilder.constructRowItem(parent));
-    for(var key in data) {
-      for(let i = 0; i < data[key].length; i++){
-        contents.append(htmlBuilder.constructRowItem(data[key][i]));
-      }
+    let renderData = filterData[document.querySelector('select[name=filter]').value]()[1];
+    for(let i = 0; i < renderData.length; i++){
+      contents.append(htmlBuilder.constructRowItem(renderData[i]));
     }
   };
 
@@ -66,7 +70,7 @@ function DataHandler(pathBuilder) {
     renderData();
   };
 
-  htmlBuilder.constructLocationForWindow(pathBuilder.getPath().split('/').filter(dir => dir.trim().length));
+  htmlBuilder.constructHeader(filterData, renderData);
 
   return {
     refresh: refresh

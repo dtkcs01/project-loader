@@ -12,7 +12,7 @@ var HTMLBuilder = function(pathBuilder) {
         iii. function [ constructCheckBoxForItem ] ( private )
         iv. function [ constructRowItem ] ( public )
         v. function [ constructToggleModeButton ] ( private )
-        vi. function [ constructLocationForWindow ] ( public )
+        vi. function [ constructHeader ] ( public )
       2. Return
   */
 
@@ -100,7 +100,8 @@ var HTMLBuilder = function(pathBuilder) {
     mode.append(' Analyse');
   }
 
-  var constructLocationForWindow = function(pathArray) {
+  var constructLocationNavigator = function() {
+    let pathArray = pathBuilder.getPath().split('/').filter(dir => dir.trim().length);
     let location = $(document.getElementById('location'));
 
     for(let i = 0; i < pathArray.length; i++) {
@@ -109,12 +110,25 @@ var HTMLBuilder = function(pathBuilder) {
       }, [decodeURIComponent(pathArray[i])]));
       location.append(' / ');
     }
+  };
 
+  var constructFilters = function(filterData, refresh) {
+    let selector = $(document.querySelector('select[name=filter]'));
+    for(let key in filterData) {
+      selector.append(buildHTML('option', {'value': key}, [filterData[key]()[0]]));
+    }
+
+    selector.on('change', refresh);
+  }
+
+  var constructHeader = function(filterData, refresh) {
+    constructFilters(filterData, refresh);
+    constructLocationNavigator();
     constructToggleModeButton();
   }
 
   return {
     constructRowItem: constructRowItem,
-    constructLocationForWindow: constructLocationForWindow
+    constructHeader: constructHeader
   };
 }
