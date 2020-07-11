@@ -12,6 +12,7 @@ function DataHandler(pathBuilder) {
         i. function [ reconstructPacket ] ( private )
         ii. function [ renderData ] ( private )
         iii. function [ refresh ] ( public )
+      3. function call [ function [ htmlBuilder.constructLocationForWindow ] ]
       3. Return
   */
 
@@ -65,7 +66,7 @@ function DataHandler(pathBuilder) {
     renderData();
   };
 
-  htmlBuilder.constructLocationForWindow(pathBuilder.getPath().split('/'));
+  htmlBuilder.constructLocationForWindow(pathBuilder.getPath().split('/').filter(dir => dir.trim().length));
 
   return {
     refresh: refresh
