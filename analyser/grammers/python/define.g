@@ -1,5 +1,12 @@
-DOT_OP: "."
-COMMA_OP: ","
-DIG: /[0-9]/
+DOT: "."
+COMMA: ","
 ALPHA: /[a-zA-Z_]/
-ID: ALPHA (ALPHA|DIG)*
+DIGIT: /[0-9]/
+
+ID: ALPHA (ALPHA|DIGIT)*
+COMMENT: /"""([^"]|("{1,2}))*"""/
+ | /'''([^']|('{1,2}))*'''/
+
+LF: /\n/
+CR: /\r/
+NEWLINE: LF | (CR LF)

@@ -1,4 +1,11 @@
-start: import
-import: (FROM id_seq)? (IMPORT (id_seq|"*")) (AS ID)?
-id_seq: id_ext (COMMA_OP id_ext)*
-id_ext: ID (DOT_OP ID)*
+start: lines
+
+lines: imports lines
+  | /[.\n]/ lines
+  | NEWLINE
+
+imports: (FROM id_dot)? (IMPORT id_seq) (AS id_seq)? NEWLINE
+
+id_seq: id_dot (COMMA id_dot)*
+id_dot: ID? (DOT ID)*
+  | DOT
